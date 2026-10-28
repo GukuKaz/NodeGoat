@@ -1,3 +1,4 @@
+
 name: Trivy Scan
 
 on:
@@ -10,26 +11,27 @@ jobs:
       security-events: write
       actions: read
       contents: read
+
     steps:
       - uses: actions/checkout@v4
 
       - name: Run Trivy (console output)
-        uses: aquasecurity/trivy-action@v0.36.0
+        uses: aquasecurity/trivy-action@0.36.0
         with:
           scan-type: 'fs'
           format: 'table'
           severity: 'CRITICAL'
           ignore-unfixed: true
-          exit-code: '0'
+          exit-code: '1'
 
       - name: Run Trivy (sarif)
-        uses: aquasecurity/trivy-action@v0.36.0
+        uses: aquasecurity/trivy-action@0.36.0
         with:
           scan-type: 'fs'
           format: 'sarif'
           severity: 'CRITICAL'
-           ignore-unfixed: true
-          exit-code: '1'
+          ignore-unfixed: true
+          exit-code: '0'
           output: 'trivy-results.sarif'
 
       - name: Upload to GitHub Security
